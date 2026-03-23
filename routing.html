@@ -137,10 +137,16 @@
                 </h2>
                 <div id="collapseTypes" class="accordion-collapse collapse" aria-labelledby="headingTypes">
                     <div class="accordion-body">
-                        <strong>Routing Estático:</strong><br> Configurado manualmente. Sencillo y seguro, pero no se adapta a fallos automáticamente.
+                        <strong>Routing Estático:</strong><br>
+                        En el routing estático las rutas se configuran manualmente en cada router. Esto significa que el administrador decide por dónde deben ir los paquetes y lo deja fijado. Es sencillo, muy estable y no consume recursos del router, pero tiene una limitación importante: si un enlace falla o cambia la topología, los routers no se adaptan solos. Hay que entrar y modificar las rutas a mano, por lo que solo es práctico en redes pequeñas o muy estables.
+                        <br><br>
                         <img src="img/routing_estatico.png" class="routing-img" alt="Routing Estático"><br><br>
-                        <strong>Routing Dinámico:</strong><br> Ajuste automático según cambios en la red, ideal para redes medianas/grandes.
+
+                        <strong>Routing Dinámico:</strong><br>
+                        En el routing dinámico los routers intercambian información entre ellos y calculan automáticamente la mejor ruta según el estado real de la red. Esto permite adaptarse a fallos, cambios o ampliaciones sin intervención manual. Es ideal para redes medianas o grandes, donde mantener rutas estáticas sería poco práctico. Dentro del routing dinámico existen varios protocolos; en esta práctica mencionamos dos: <strong>RIP</strong> (más simple y basado en saltos) y <strong>OSPF</strong> (más eficiente y usado en redes profesionales).
+                        <br><br>
                         <img src="img/routing_dinamico.png" class="routing-img" alt="Routing Dinámico">
+
                     </div>
                 </div>
             </div>

@@ -81,11 +81,11 @@
         .card-custom {
             background: white;
             border-radius: 24px;
-            padding: 80px 60px;
+            padding: 40px 60px 80px 60px;
             box-shadow: 0 20px 45px rgba(0,0,0,0.15);
             text-align: center;
-            max-width: 600px;
-            width: 90%;
+            max-width: 900px;
+            width: 95%;
             animation: fadeIn 0.6s ease-out;
             display: flex;
             flex-direction: column;
@@ -179,14 +179,19 @@
 <div class="card-container">
     <div class="card-custom">
         <h1>Contexto de la red</h1>
-        <p>La empresa dispone de una red distribuida en Euskadi, con oficinas en Álava (Vitoria) y Bizkaia (Bilbao y Barakaldo).</p>
+        <p>La empresa cuenta con una red distribuida en Euskadi, con oficinas en Álava y Bizkaia. En Álava la actividad se concentra en Vitoria‑Gasteiz, donde existen dos oficinas y, aunque podría abrirse alguna más, no se espera una expansión significativa fuera de la ciudad.</p>
+        <p>En Bizkaia la empresa dispone de una oficina en Bilbao, con posibilidades de crecimiento futuro, y otra en Barakaldo, donde no se prevén ampliaciones. Tampoco se descarta una futura llegada a Gipuzkoa, por lo que la red debe estar preparada para integrar nuevas sedes si fuera necesario.</p>
 
         <div class="btn-container">
-            <button id="toggleButton" class="btn-custom" onclick="toggleImage()">Ver redes →</button>
+            <button id="toggleButton" class="btn-custom" onclick="toggleImage()">Ver redes</button>
         </div>
 
         <img id="networkImage" src="img/mapa.png" alt="Imagen de red" class="img-preview" data-bs-toggle="modal" data-bs-target="#imageModal">
-        <p id="extraText">Cada provincia cuenta con un router central y un servidor para gestionar la red. Esta estructura permite escalabilidad y organización jerárquica.</p>
+
+        <div id="extraText" >
+            <p>La red actual está organizada por provincias, cada una con un router central ubicado en su ciudad principal: en Álava el router se encuentra en Vitoria‑Gasteiz y en Bizkaia en Bilbao. Desde estos routers provinciales se gestionan las conexiones hacia las distintas oficinas. En el caso de Barakaldo, al no prever crecimiento y estar muy próxima a Bilbao, no se ha añadido un router intermedio; su red LAN se conecta directamente al router provincial de Bizkaia.</p>
+            <p>Cada oficina dispone de su propia red local formada por un router de edificio, un switch y los equipos de usuario (PCs y portátiles). Además, los servidores se han colocado junto a los routers provinciales para centralizar servicios, facilitar la administración y asegurar que todas las delegaciones puedan acceder a ellos de forma eficiente. Esta estructura mantiene una jerarquía clara y permite escalar la red si en el futuro se añaden nuevas oficinas.</p>
+        </div>
         <a href="routing.html" class="next-text">Siguiente →</a>
     </div>
 </div>
@@ -220,7 +225,7 @@
             img.src = "img/mapa.png";
             modalImg.src = "img/mapa.png";
             text.style.display = "none";
-            btn.textContent = "Ver redes →";
+            btn.textContent = "Ver redes";
             showingRed = false;
         }
     }
