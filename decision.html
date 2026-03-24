@@ -43,20 +43,37 @@
         .card-custom {
             background: white;
             border-radius: 24px;
-            padding: 80px 60px;
+            padding: 60px 50px;
             box-shadow: 0 20px 45px rgba(0,0,0,0.15);
-            text-align: justify;
-            max-width: 800px;
+            max-width: 850px;
             width: 90%;
             animation: fadeIn 0.6s ease-out;
             display: flex;
             flex-direction: column;
+            gap: 20px;
         }
 
-        h1 { font-weight: 600; font-size: 2rem; color: #2d3436; margin-bottom: 40px; text-align: center; }
-        p { font-size: 0.95rem; line-height: 1.7; color: #636e72; }
+        h1 { font-weight: 600; font-size: 2rem; color: #2d3436; margin-bottom: 10px; text-align: center; }
 
-        .btn-container { display: flex; justify-content: center; margin-top: 30px; }
+        .bloque {
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #2d3436;
+        }
+
+        .bloque-dinamico { background-color: #d8c1ff; }  /* morado pastel */
+        .bloque-protocolo { background-color: #f0e6ff; } /* morado más suave */
+        .bloque-final { background-color: #fff5e6; }
+
+        .titulo-bloque {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #341f97;
+        }
+
+        .btn-container { display: flex; justify-content: center; margin-top: 20px; }
         .btn-custom { background-color: var(--btn-color); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; padding: 12px 35px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 5px 18px rgba(162, 155, 254, 0.5); cursor: pointer; }
         .btn-custom:hover { background-color: #6c5ce7; transform: translateY(-2px); }
 
@@ -75,9 +92,27 @@
 <div class="card-container">
     <div class="card-custom">
         <h1>Decisión de Routing para la Práctica</h1>
-        <p>
-            Tras analizar la estructura de nuestra red distribuida, con oficinas en Vitoria, Bilbao y Barakaldo, y considerando la necesidad de comunicación eficiente entre delegaciones, se ha decidido implementar un <strong>routing dinámico</strong>. Esta elección se fundamenta en la capacidad del routing dinámico para adaptarse automáticamente a cambios en la topología de la red, gestionar fallos sin intervención manual y ofrecer escalabilidad para futuras ampliaciones. Dentro de los protocolos dinámicos, se ha optado por <strong>OSPF (Open Shortest Path First)</strong> frente a RIP, debido a su rápida convergencia, métrica basada en ancho de banda, robustez ante fallos y capacidad para manejar redes medianas y grandes de manera eficiente. Aunque RIP es más sencillo de configurar y consume menos recursos, su limitada escalabilidad y lenta convergencia lo hacen menos adecuado para la estructura distribuida que manejamos. En conclusión, la elección de routing dinámico con OSPF garantiza una red más confiable, eficiente y preparada para adaptarse a cambios futuros, demostrando un razonamiento profesional y fundamentado en las características técnicas de los protocolos y las necesidades de nuestra práctica.
-        </p>
+
+        <div class="bloque bloque-dinamico">
+            <div class="titulo-bloque">¿Por qué routing dinámico?</div>
+            Tras analizar la red con sedes en Vitoria-Gasteiz, Bilbao y Barakaldo, y teniendo en cuenta la posible expansión a Gipuzkoa, se ha optado por routing dinámico.
+            Aunque el routing estático podría funcionar en redes muy pequeñas y sin cambios, en este caso supondría configurar manualmente cada ruta y actualizarla cada vez que se añada una nueva oficina.
+            Esto complica la gestión y aumenta el riesgo de errores. El routing dinámico permite que los routers intercambien información automáticamente y se adapten a los cambios sin intervención manual.
+        </div>
+
+        <div class="bloque bloque-protocolo">
+            <div class="titulo-bloque">¿Por qué OSPF y no RIP?</div>
+            RIP podría ser válido en una red muy simple (por ejemplo, solo dos oficinas conectadas), pero tiene limitaciones importantes como su métrica basada únicamente en saltos y la convergencia lenta.
+            Esto puede provocar rutas poco eficientes y problemas ante fallos.
+            OSPF, en cambio, utiliza el coste de los enlaces (teniendo en cuenta el ancho de banda), calcula la mejor ruta posible y responde rápidamente ante cambios en la red.
+            Además, está diseñado para redes medianas y grandes, por lo que se adapta mejor a este escenario.
+        </div>
+
+        <div class="bloque bloque-final">
+            <div class="titulo-bloque">Conclusión</div>
+            La elección de routing dinámico con OSPF permite construir una red más eficiente, escalable y robusta, preparada para futuras ampliaciones y capaz de adaptarse rápidamente ante cualquier cambio o fallo.
+        </div>
+
         <div class="btn-container">
             <a href="index.html" class="btn-custom">Volver al inicio</a>
         </div>

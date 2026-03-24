@@ -93,10 +93,40 @@
         }
         .routing-img { width: 100%; max-height: 250px; object-fit: contain; border-radius: 12px; margin: 10px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-        th, td { padding: 8px 12px; border: 1px solid #ddd; text-align: left; font-size: 0.9rem; }
-        th { background-color: #f7f7f7; font-weight: 600; }
+        /* TABLAS MEJORADAS */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
 
+        th {
+            background-color: #6c5ce7;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 10px;
+            background-color: #f9f9ff;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #eef0ff;
+        }
+
+        tr:hover td {
+            background-color: #dfe3ff;
+        }
+
+        .tabla-titulo {
+            font-weight: 600;
+            margin-top: 20px;
+            color: #341f97;
+        }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95);} to { opacity: 1; transform: scale(1);} }
     </style>
 </head>
@@ -140,12 +170,8 @@
                         <strong>Routing Estático:</strong><br>
                         En el routing estático las rutas se configuran manualmente en cada router. Esto significa que el administrador decide por dónde deben ir los paquetes y lo deja fijado. Es sencillo, muy estable y no consume recursos del router, pero tiene una limitación importante: si un enlace falla o cambia la topología, los routers no se adaptan solos. Hay que entrar y modificar las rutas a mano, por lo que solo es práctico en redes pequeñas o muy estables.
                         <br><br>
-                        <img src="img/routing_estatico.png" class="routing-img" alt="Routing Estático"><br><br>
-
                         <strong>Routing Dinámico:</strong><br>
                         En el routing dinámico los routers intercambian información entre ellos y calculan automáticamente la mejor ruta según el estado real de la red. Esto permite adaptarse a fallos, cambios o ampliaciones sin intervención manual. Es ideal para redes medianas o grandes, donde mantener rutas estáticas sería poco práctico. Dentro del routing dinámico existen varios protocolos; en esta práctica mencionamos dos: <strong>RIP</strong> (más simple y basado en saltos) y <strong>OSPF</strong> (más eficiente y usado en redes profesionales).
-                        <br><br>
-                        <img src="img/routing_dinamico.png" class="routing-img" alt="Routing Dinámico">
 
                     </div>
                 </div>
@@ -159,6 +185,12 @@
                 </h2>
                 <div id="collapseRIP" class="accordion-collapse collapse" aria-labelledby="headingRIP">
                     <div class="accordion-body">
+
+                        <p>
+                            RIP es un protocolo de enrutamiento sencillo que funciona contando el número de routers (saltos)
+                            que hay hasta llegar a un destino. Cada router comparte con sus vecinos la información que conoce.
+                        </p>
+
                         <ul>
                             <li><strong>Tipo:</strong> Vector de distancia</li>
                             <li><strong>Métrica:</strong> Número de saltos (máx 15)</li>
@@ -167,9 +199,30 @@
                             <li><strong>Ventajas:</strong> Fácil de configurar, bajo consumo de recursos</li>
                             <li><strong>Desventajas:</strong> No adecuado para redes grandes</li>
                         </ul>
+
+                        <p>
+                            <strong>Cómo funciona:</strong> Cada router dice “yo llego a esta red en X saltos”
+                            y los demás routers eligen la ruta con menos saltos.
+                        </p>
+
+                        <div style="background-color:#ffe5e5; padding:10px; border-radius:5px;">
+                            <strong>Ejemplo explicado:</strong><br><br>
+
+                            Imagina que quieres enviar datos desde <strong>A hasta B</strong> y hay dos caminos:<br><br>
+
+                            - Camino 1: A → R1 → R2 → B → <strong>2 saltos</strong><br>
+                            - Camino 2: A → R3 → B → <strong>1 salto</strong><br><br>
+
+                            👉 RIP <strong>elige el camino 2</strong> porque tiene menos saltos.<br><br>
+
+                            Pero RIP <strong>NO tiene en cuenta</strong> si ese camino es más lento o peor,
+                            solo le importa el número de routers.
+                        </div>
+
                     </div>
                 </div>
             </div>
+
             <!-- OSPF -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOSPF">
@@ -179,6 +232,12 @@
                 </h2>
                 <div id="collapseOSPF" class="accordion-collapse collapse" aria-labelledby="headingOSPF">
                     <div class="accordion-body">
+
+                        <p>
+                            OSPF es un protocolo más avanzado que construye un mapa completo de la red y calcula la mejor ruta
+                            teniendo en cuenta la calidad de los enlaces (velocidad, coste, etc.).
+                        </p>
+
                         <ul>
                             <li><strong>Tipo:</strong> Estado de enlace</li>
                             <li><strong>Métrica:</strong> Costo de los enlaces</li>
@@ -187,6 +246,25 @@
                             <li><strong>Ventajas:</strong> Evita bucles, eficiente</li>
                             <li><strong>Desventajas:</strong> Configuración más compleja</li>
                         </ul>
+
+                        <p>
+                            <strong>Cómo funciona:</strong> Cada router conoce toda la red y calcula el mejor camino,
+                            no solo el más corto.
+                        </p>
+
+                        <div style="background-color:#e5ffe5; padding:10px; border-radius:5px;">
+                            <strong>Ejemplo explicado:</strong><br><br>
+
+                            Imagina los mismos caminos que antes:<br><br>
+
+                            - Camino 1: A → R1 → R2 → B → <strong>2 saltos pero conexión rápida</strong><br>
+                            - Camino 2: A → R3 → B → <strong>1 salto pero conexión lenta</strong><br><br>
+
+                            👉 OSPF <strong>elige el camino 1</strong> porque es más rápido y eficiente.<br><br>
+
+                            Tiene en cuenta la calidad del enlace, no solo la cantidad de routers.
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -199,16 +277,94 @@
                 </h2>
                 <div id="collapseSummary" class="accordion-collapse collapse" aria-labelledby="headingSummary">
                     <div class="accordion-body">
+                        <div class="tabla-titulo">Routing Estático vs Dinámico</div>
                         <table>
                             <thead>
-                            <tr><th>Característica</th><th>Estático</th><th>Dinámico</th></tr>
+                            <tr>
+                                <th>Característica</th>
+                                <th>Routing Estático</th>
+                                <th>Routing Dinámico</th>
+                            </tr>
                             </thead>
                             <tbody>
-                            <tr><td>Adaptabilidad</td><td>No cambia automáticamente</td><td>Se ajusta según cambios en la red</td></tr>
-                            <tr><td>Escalabilidad</td><td>Difícil en redes grandes</td><td>Media/Alta</td></tr>
-                            <tr><td>Consumo</td><td>Bajo</td><td>Medio-alto</td></tr>
-                            <tr><td>Mantenimiento</td><td>Manual</td><td>Automático</td></tr>
-                            <tr><td>Robustez</td><td>Baja</td><td>Alta</td></tr>
+                            <tr>
+                                <td>Cómo se configura</td>
+                                <td>El administrador define manualmente cada ruta</td>
+                                <td>Los routers calculan las rutas automáticamente</td>
+                            </tr>
+                            <tr>
+                                <td>Adaptación a cambios</td>
+                                <td>No se adapta si falla un enlace</td>
+                                <td>Se actualiza automáticamente ante fallos o cambios</td>
+                            </tr>
+                            <tr>
+                                <td>Mantenimiento</td>
+                                <td>Requiere intervención manual constante</td>
+                                <td>No requiere intervención una vez configurado</td>
+                            </tr>
+                            <tr>
+                                <td>Escalabilidad</td>
+                                <td>Difícil de usar en redes grandes</td>
+                                <td>Adecuado para redes medianas y grandes</td>
+                            </tr>
+                            <tr>
+                                <td>Consumo de recursos</td>
+                                <td>Muy bajo (no hay cálculos)</td>
+                                <td>Mayor (los routers intercambian información y calculan rutas)</td>
+                            </tr>
+                            <tr>
+                                <td>Uso típico</td>
+                                <td>Redes pequeñas o muy estables</td>
+                                <td>Redes reales con cambios y crecimiento</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="tabla-titulo">RIP vs OSPF</div>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Característica</th>
+                                <th>RIP</th>
+                                <th>OSPF</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Tipo de protocolo</td>
+                                <td>Vector de distancia (intercambia información con vecinos)</td>
+                                <td>Estado de enlace (cada router conoce toda la red)</td>
+                            </tr>
+                            <tr>
+                                <td>Cómo elige la ruta</td>
+                                <td>Elige la ruta con menos saltos (menos routers)</td>
+                                <td>Elige la ruta más eficiente según el coste del enlace</td>
+                            </tr>
+                            <tr>
+                                <td>Información que usa</td>
+                                <td>Solo número de saltos</td>
+                                <td>Velocidad, coste y estado de los enlaces</td>
+                            </tr>
+                            <tr>
+                                <td>Velocidad de convergencia</td>
+                                <td>Lenta (tarda en adaptarse a cambios)</td>
+                                <td>Rápida (reacciona rápidamente a fallos)</td>
+                            </tr>
+                            <tr>
+                                <td>Precisión de las rutas</td>
+                                <td>Baja (puede elegir rutas poco eficientes)</td>
+                                <td>Alta (elige la mejor ruta real)</td>
+                            </tr>
+                            <tr>
+                                <td>Complejidad</td>
+                                <td>Muy sencillo de configurar</td>
+                                <td>Más complejo de configurar</td>
+                            </tr>
+                            <tr>
+                                <td>Uso recomendado</td>
+                                <td>Redes pequeñas</td>
+                                <td>Redes medianas y grandes</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
